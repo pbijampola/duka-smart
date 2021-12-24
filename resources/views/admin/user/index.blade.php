@@ -32,7 +32,7 @@
                 <th scope="row">{{ $key+1 }}</th>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->role}}</td>
-                <td><img src="{{$user->photo }}" alt="{{ $user->title }}" style="max-height: 90px; max-width:120px"></td>
+                <td><img src="{{$user->photo }}" alt="{{ $user->title }}" style="border-radius:50%; max-height: 90px; max-width:120px"></td>
                 <td>{{ $user->phone }}</td>
                 <td>
 

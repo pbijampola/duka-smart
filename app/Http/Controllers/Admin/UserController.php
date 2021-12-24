@@ -39,12 +39,14 @@ class UserController extends Controller
     {
 
         request()->validate([
-            'title' => 'required|string|max:50',
-            'description' => 'required',
-            'condition' => 'nullable|string|in:banner,promo',
+            'name' => 'required|string|max:50',
+            'username' => 'required|string|max:50|unique:users',
+            'email' => 'required|email|unique:users',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string',
+            'role'=>'required|string|in:admin,customer,vendor',
             'status' => 'nullable|string|in:active,inactive',
-            'slug' => 'required',
-            'photo' => 'required'
+            'password' => 'required|string|min:6|confirmed',
 
         ]);
         $users=User::create([
