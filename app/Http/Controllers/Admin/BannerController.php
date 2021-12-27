@@ -43,7 +43,7 @@ class BannerController extends Controller
             'description' => 'required',
             'condition' => 'nullable|string|in:banner,promo',
             'status' => 'nullable|string|in:active,inactive',
-            'slug' => 'required',
+            'slug' => 'required|unique:banners,slug',
             'photo' => 'required'
 
         ]);
@@ -108,7 +108,7 @@ class BannerController extends Controller
             'description' => 'required',
             'condition' => 'nullable|string|in:banner,promo',
             'status' => 'nullable|string|in:active,inactive',
-            'slug' => 'required',
+            'slug' => 'required|exists:banners,slug',
             'photo' => 'required'
 
         ]);
