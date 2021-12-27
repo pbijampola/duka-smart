@@ -38,24 +38,30 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+
         request()->validate([
             'name' => 'required|string|max:50',
             'username' => 'required|string|max:50|unique:users',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email',
             'address' => 'required|string|max:255',
             'phone' => 'required|string',
             'role'=>'required|string|in:admin,customer,vendor',
             'status' => 'nullable|string|in:active,inactive',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
+            'photo' => 'required'
 
         ]);
         $users=User::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'condition' => $request->condition,
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'photo' => $request->photo,
+            'role'=>$request->role,
             'status' => $request->status,
-            'slug' => $request->slug,
-            'photo' => $request->photo
+            'password'=>$request->password
+
         ]);
         if($users){
             return redirect()->route('user.index')->with('success', 'Banner created successfully');
@@ -86,9 +92,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $users=User::find($id);
+        $users=User::findOrFail($id);
         if($users){
-            return view('admin.user.edit',compact('banner'));
+            return view('admin.user.edit',compact('users'));
         }
         else{
             return back()->with('error','Data Not Found');
@@ -105,18 +111,20 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData=request()->validate([
-            'title' => 'required|string|max:50',
-            'description' => 'required',
-            'condition' => 'nullable|string|in:banner,promo',
+            'name' => 'required|string|max:50',
+            'username' => 'required|string|max:50|unique:users',
+            'email' => 'required|email|exists:users,email',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string',
+            'role'=>'required|string|in:admin,customer,vendor',
             'status' => 'nullable|string|in:active,inactive',
-            'slug' => 'required',
+            'password' => 'required|string|min:6',
             'photo' => 'required'
-
         ]);
         //saving the update data
         $users=User::find($id);
         $users->update($validatedData);
-        return redirect()->route('user.index')->with('success','Banner Updated Successfully');
+        return redirect()->route('user.index')->with('success','User Updated Successfully');
     }
 
     /**
@@ -130,7 +138,7 @@ class UserController extends Controller
         if($id=!null){
             $users=User::where('id',$id);
             $users->delete();
-            return redirect('user.index')->with('success','Banner Deleted Successfully');
+            return redirect()->route('user.index')->with('success','User Deleted Successfully');
         }
     }
 }

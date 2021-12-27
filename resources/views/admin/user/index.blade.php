@@ -45,11 +45,11 @@
                 <td>
                     <div class="d-flex">
                         <div>
-                            <a href="{{ route('banner.edit',$user->id) }}"  data-toggle="tooltip" title="Edit" data-placement="bottom" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a href="{{ route('user.edit',$user->id) }}"  data-toggle="tooltip" title="Edit" data-placement="bottom" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
 
                         </div>
                         <div>
-                            <form action="{{ route('banner.destroy',$user->id) }}" method="POST">
+                            <form action="{{ route('user.destroy',$user->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" data-toggle="tooltip" title="Delete" data-placement="bottom" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button>
